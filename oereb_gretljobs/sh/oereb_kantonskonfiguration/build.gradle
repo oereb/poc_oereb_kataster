@@ -17,22 +17,21 @@ def iliModelBasis = "OeREBKRM_V2_0"
 def iliModelKonfiguration = "OeREBKRMkvs_V2_0"
 def iliModelTransferstruktur = "OeREBKRMtrsfr_V2_0"
 
-def responsibleOfficesDataFile = "ch.so.agi.oereb_zustaendigestellen_V2_0.xtf"
-def responsibleOfficesDataSet = "ch.so.agi.oereb_zustaendigestellen"
-def cantonalLegalBasisDataFile = "ch.so.sk.oereb_gesetze_V2_0.xtf"
-def cantonalLegalBasisDataSet = "ch.so.agi.oereb_gesetze"
-def cantonalThemesDataFile = "ch.so.agi.oereb_themen_V2_0.xtf"
-def cantonalThemesDataSet = "ch.so.agi.oereb_themen"
-def cantonalLogosDataFile = "ch.so.agi.oereb_logo_V2_0.xtf"
-def cantonalLogosDataSet = "ch.so.agi.oereb_logo"
-def cantonalTextDataFile = "ch.so.agi.oereb_text_V2_0.xtf"
-def cantonalTextDataSet = "ch.so.agi.oereb_text"
-def availabilityDataFile = "ch.so.agi.oereb_verfuegbarkeit_V2_0.xtf"
-def availabilityDataSet = "ch.so.agi.oereb_verfuegbarkeit"
-def subunitOfLandRegisterDataFile = "ch.so.agi.oereb_grundbuchkreis_V2_0.xtf"
-def subunitOfLandRegisterDataSet = "ch.so.agi.oereb_grundbuchkreis"
+def responsibleOfficesDataFile = "ch.sh.agi.oereb_zustaendigestellen_V2_0.xtf"
+def responsibleOfficesDataSet = "ch.sh.agi.oereb_zustaendigestellen"
+def cantonalLegalBasisDataFile = "ch.sh.sk.oereb_gesetze_V2_0.xtf"
+def cantonalLegalBasisDataSet = "ch.sh.agi.oereb_gesetze"
+def cantonalThemesDataFile = "ch.sh.agi.oereb_themen_V2_0.xtf"
+def cantonalThemesDataSet = "ch.sh.agi.oereb_themen"
+def cantonalLogosDataFile = "ch.sh.agi.oereb_logo_V2_0.xtf"
+def cantonalLogosDataSet = "ch.sh.agi.oereb_logo"
+def cantonalTextDataFile = "ch.sh.agi.oereb_text_V2_0.xtf"
+def cantonalTextDataSet = "ch.sh.agi.oereb_text"
+def availabilityDataFile = "ch.sh.agi.oereb_verfuegbarkeit_V2_0.xtf"
+def availabilityDataSet = "ch.sh.agi.oereb_verfuegbarkeit"
+def subunitOfLandRegisterDataFile = "ch.sh.agi.oereb_grundbuchkreis_V2_0.xtf"
+def subunitOfLandRegisterDataSet = "ch.sh.agi.oereb_grundbuchkreis"
 
-//def cantonalDataBaseUrl = "https://s3.eu-central-1.amazonaws.com/ch.so.agi.geodata-test/"
 def cantonalDataBaseUrl = "https://raw.githubusercontent.com/oereb/poc_oereb_kataster/main/oereb_config/so/"
 
 defaultTasks "importKantonskonfiguration"
@@ -190,42 +189,42 @@ task importCantonalLogos() {
 }
 
 // Kantonale Texte
-task downloadCantonalText(type: Download) {
-    group = GROUP
-    doFirst {
-        println cantonalDataBaseUrl + cantonalTextDataFile
-    }
-    description = "Download kantonale Texte."
-    src cantonalDataBaseUrl + cantonalTextDataFile
-    dest pathToTempFolder
-    overwrite true
-}
+// task downloadCantonalText(type: Download) {
+//     group = GROUP
+//     doFirst {
+//         println cantonalDataBaseUrl + cantonalTextDataFile
+//     }
+//     description = "Download kantonale Texte."
+//     src cantonalDataBaseUrl + cantonalTextDataFile
+//     dest pathToTempFolder
+//     overwrite true
+// }
 
-dbSchemas.each { dbSchema ->
-    def schema = dbSchema.toString()
-    task "importCantonalText_$schema"(type: Ili2pgReplace, dependsOn: "downloadCantonalText") {
-        group = GROUP
-        description = "Import der kantonalen Text in das $schema Schema"
-        database = [dbUriOerebV2, dbUserOerebV2, dbPwdOerebV2]
-        dbschema = schema
-        dataset = cantonalTextDataSet
-        models = iliModelKonfiguration
-        dataFile = file(Paths.get(pathToTempFolder.toString(), cantonalTextDataFile))
-        disableValidation = true
-        importBid = true
-        importTid = true
-    }
-}
+// dbSchemas.each { dbSchema ->
+//     def schema = dbSchema.toString()
+//     task "importCantonalText_$schema"(type: Ili2pgReplace, dependsOn: "downloadCantonalText") {
+//         group = GROUP
+//         description = "Import der kantonalen Text in das $schema Schema"
+//         database = [dbUriOerebV2, dbUserOerebV2, dbPwdOerebV2]
+//         dbschema = schema
+//         dataset = cantonalTextDataSet
+//         models = iliModelKonfiguration
+//         dataFile = file(Paths.get(pathToTempFolder.toString(), cantonalTextDataFile))
+//         disableValidation = true
+//         importBid = true
+//         importTid = true
+//     }
+// }
 
-task importCantonalText() {
-    group = GROUP
-    description = "Aggregationstask für Import der kantonalen Texte."
-    mustRunAfter "importCantonalLogos"
+// task importCantonalText() {
+//     group = GROUP
+//     description = "Aggregationstask für Import der kantonalen Texte."
+//     mustRunAfter "importCantonalLogos"
 
-    dependsOn {
-        tasks.findAll { task -> task.name.startsWith('importCantonalText_') }
-    }    
-}
+//     dependsOn {
+//         tasks.findAll { task -> task.name.startsWith('importCantonalText_') }
+//     }    
+// }
 
 // Verfügbarkeit
 task downloadAvailability(type: Download) {
@@ -258,7 +257,8 @@ dbSchemas.each { dbSchema ->
 task importAvailability() {
     group = GROUP
     description = "Aggregationstask für Import der Verfügbarkeit."
-    mustRunAfter "importCantonalText"
+    //mustRunAfter "importCantonalText"
+    mustRunAfter "importCantonalLogos"
 
     dependsOn {
         tasks.findAll { task -> task.name.startsWith('importAvailability_') }
@@ -307,5 +307,6 @@ task importKantonskonfiguration() {
     group = GROUP
     description = "Importiert sämtliche notwendigen kantonalen Konfigurationen, Gesetze, Logos, Texte etc."
     dependsOn "importResponsibleOffices", "importCantonalLegalBasis", "importCantonalThemes",
-        "importCantonalLogos", "importCantonalText", "importAvailability", "importSubunitOfLandRegister"
+        "importCantonalLogos", /*"importCantonalText",*/ "importAvailability", "importSubunitOfLandRegister"
+    //mustRunAfter ":oereb_bundeskonfiguration:importBundeskonfiguration"    
 }
