@@ -16,7 +16,7 @@ def iliModelAmtlicheVermessung = "DM01AVCH24LV95D"
 def cadastralSurveyingBaseUrl = "https://data.geo.admin.ch/ch.swisstopo-vd.amtliche-vermessung/DM01AVCH24D/ITF/"
 //def cadastralSurveyingDataSets = ["2901","2903","2904","2914","2915","2917","2919","2920","2931","2932","2933","2936","2937","2938","2939","2951","2952","2953","2961","2962","2963","2964","2971","2972","2973","2974"]
 //def cadastralSurveyingDataSets = ["2939"]
-def cadastralSurveyingDataSets = ["SO/2430", "SO/2457", "SO/2491", "SO/2492", "SO/2501", "SO/2502", "SO/2546", "SO/2572", "SO/2573", "SO/2574", "SO/2580", "SO/2582", "SO/2585", "SO/2601", "SH/2939"]
+def cadastralSurveyingDataSets = ["SO/2430", "SO/2457", "SO/2491", "SO/2492", "SO/2501", "SO/2502", "SO/2546", "SO/2572", "SO/2573", "SO/2574", "SO/2580", "SO/2582", "SO/2585", "SO/2601", "SH/2939", "SZ/1372"]
 
 cadastralSurveyingDataSets.each { cadastralSurveyingDataSet ->
     def dataSet = cadastralSurveyingDataSet.toString().substring(3)
