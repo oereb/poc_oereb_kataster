@@ -10,3 +10,6 @@ include 'so:oereb_kbs'
 include 'so:oereb_grundwasserschutz'
 include 'so:oereb_nutzungsplanung'
 include 'so:oereb_nutzungsplanung_kantonal'
+include 'sz:oereb_kantonskonfiguration'
+include 'sz:oereb_kbs'
+
