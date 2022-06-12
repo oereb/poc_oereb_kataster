@@ -50,8 +50,8 @@ SH:
 - http://localhost:8080/extract/pdf?EGRID=CH167308546127
 
 SZ:
-- 
-- 
+- http://localhost:8080/extract/xml?EGRID=CH667722407539
+- http://localhost:8080/extract/pdf?EGRID=CH667722407539
 
 ## Todo
 
